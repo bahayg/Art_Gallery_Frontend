@@ -18,7 +18,7 @@ const showArtwork = (artworksArray) => {
 const thousands_separators = num => {
     var num_parts = num.toString().split(".");
     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return num_parts.join(".");
+    return `$${num_parts.join(".")}`;
 } 
 
 //   function number_to_price(v){
@@ -30,35 +30,33 @@ const thousands_separators = num => {
 // }
 
 const makeArtCard = (artwork) => {
+    let row = document.querySelector(".row")
     let column = document.createElement("div")
     column.className = "col-sm"
-    const div = document.createElement("div")
-    div.className = "card"
-    div.style = "width: 18rem"
+    let cardDiv = document.createElement("div")
+    cardDiv.className = "card"
+    cardDiv.style = "width: 18rem"
     let img = document.createElement("img")
-    img.src = artwork.image
     img.className = "card-img-top"
-
-    let divBody = document.createElement("div")
-    divBody.className = "card-body"
+    img.src = artwork.image
+    let cardBody = document.createElement("div")
+    cardBody.className = "card-body"
     let h5 = document.createElement("h5")
-    h5.innerText = artwork.title
     h5.className = "card-title"
+    h5.innerText = artwork.title
     let h6 = document.createElement("h6")
     h6.innerText = artwork.artist_name
     let p = document.createElement("p")
     let pValue = thousands_separators(artwork.price)
     p.innerText = pValue
 
-    divBody.appendChild(h5)
-    divBody.appendChild(h6)
-    divBody.appendChild(p)
-    div.appendChild(img)
-    div.appendChild(divBody)
-    column.appendChild(div)
-
-    let artContainer = document.querySelector(".row")
-    artContainer.appendChild(column)
+    cardBody.appendChild(h5)
+    cardBody.appendChild(h6)
+    cardBody.appendChild(p)
+    cardDiv.appendChild(img)
+    cardDiv.appendChild(cardBody)
+    column.appendChild(cardDiv)
+    row.appendChild(column)
 }
 
 
