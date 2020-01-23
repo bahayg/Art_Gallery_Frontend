@@ -15,6 +15,20 @@ const showArtwork = (artworksArray) => {
     artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
 
+const thousands_separators = num => {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
+} 
+
+//   function number_to_price(v){
+//     if(v==0){return '0,00';}
+//     v=parseFloat(v);
+//     v=v.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+//     v=v.split('.').join('*').split(',').join('.').split('*').join(',');
+//     return v;
+// }
+
 const makeArtCard = (artwork) => {
     let column = document.createElement("div")
     column.className = "col-sm"
@@ -32,19 +46,21 @@ const makeArtCard = (artwork) => {
     h5.className = "card-title"
     let h6 = document.createElement("h6")
     h6.innerText = artwork.artist_name
+    let p = document.createElement("p")
+    let pValue = thousands_separators(artwork.price)
+    p.innerText = pValue
 
     divBody.appendChild(h5)
     divBody.appendChild(h6)
+    divBody.appendChild(p)
     div.appendChild(img)
     div.appendChild(divBody)
     column.appendChild(div)
 
-
     let artContainer = document.querySelector(".row")
     artContainer.appendChild(column)
-
-
 }
+
 
 
 
