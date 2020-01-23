@@ -3,6 +3,7 @@ const ArtWork_Url = "http://localhost:3000/artworks"
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
     getArtwork()
+    getGalleries()
 })
 
 const getArtwork = () => {
@@ -39,15 +40,24 @@ const makeArtCard = (artwork) => {
     div.appendChild(divBody)
     column.appendChild(div)
 
-
     let artContainer = document.querySelector(".row")
     artContainer.appendChild(column)
-
-
 }
 
+const getGalleries = () => {
+    fetch('http://localhost:3000/galleries')
+    .then(res => res.json())
+    .then(json => allGalleries(json))
+}
 
-
+const allGalleries = (galleriesArray) => {
+    let galleryDropdown = document.getElementById('inputGroupSelect01')
+    galleriesArray.forEach( gallery => {
+        let galleryOption = document.createElement('option')
+        galleryOption.innerText = gallery.name
+        galleryDropdown.appendChild(galleryOption)
+    })
+}
 
 
 
