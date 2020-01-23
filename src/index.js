@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
     getArtwork()
     getGalleries()
+    clickArtwork()
 })
 
 const getArtwork = () => {
@@ -23,7 +24,8 @@ const thousands_separators = num => {
 } 
 
 const makeArtCard = artwork => {
-    let row = document.querySelector(".row")
+    let imageSectionRow= document.getElementById("image-section-row")
+    // let row = document.querySelector(".row")
     let column = document.createElement("div")
     column.className = "col-sm"
     let cardDiv = document.createElement("div")
@@ -50,8 +52,63 @@ const makeArtCard = artwork => {
     cardDiv.appendChild(img)
     cardDiv.appendChild(cardBody)
     column.appendChild(cardDiv)
-    row.appendChild(column)
+    imageSectionRow.appendChild(column)
+
+    cardDiv.addEventListener('click', () => {
+        createArtworkModal(artwork)
+        
+    })
 }
+
+const createArtworkModal = (artwork) => {
+    console.log(artwork.title)
+    // artwork modal details: image, title, artistname, price, add button
+
+    let modal = document.createElement('div')
+    modal.classList.add('modal')
+    modal.tabindex=1
+
+    let modalDialog = document.createElement('div')
+    modalDialog.classList.add('modal-dialog')
+
+    let modalHeader = document.createElement('div')
+    modalHeader.classList.add('modal-header')
+
+    let modalTitle = document.createElement('h5')
+    h5.innerText = artwork.title
+
+    let modalButton = document.createElement('button')
+    modalButton.type = "button"
+    modalButton.classList.add('close')
+    modalButton.setAttribute(data-dismiss, "modal")
+    let modalButtonSpan = document.createElement('span')
+    modalButtonSpan.setAttribute(aria-hidden, true)
+    modalButtonSpan.innerText = "&times;"
+
+
+
+    let modalBody = document.createElement('div')
+    modalBody.classList.add('modal-body')
+
+    let modalP = document.createElement('p')
+    modalP.innerText = artwork.artist_name
+
+    modalBody.appendChild(modalP)
+
+
+    let modalFooter = document.createElement('div')
+    modalFooter.classList.add('modal-footer')
+
+    let modalFooterButton = document.createElement('button')
+    modalFooterButton.type = "button"
+    modalFooterButton.classList.add('btn')
+    modalFooterButton.classList.add('btn-primary')
+    modalFooterButton.setAttribute(data-dismi)
+
+}
+
+
+
 
 const createUser = () => {
 
@@ -73,7 +130,7 @@ const allGalleries = (galleriesArray) => {
     })
 }
 
-
+clickArtwork()
 
 
 //------------------
