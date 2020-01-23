@@ -12,43 +12,57 @@ const getArtwork = () => {
     .then(json => showArtwork(json))
 }
 
-const showArtwork = (artworksArray) => {
+const showArtwork = artworksArray => {
     artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
 
-const makeArtCard = (artwork) => {
+const thousands_separators = num => {
+    let num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return `$${num_parts.join(".")}`;
+} 
+
+const makeArtCard = artwork => {
+    let row = document.querySelector(".row")
     let column = document.createElement("div")
     column.className = "col-sm"
-    const div = document.createElement("div")
-    div.className = "card"
-    div.style = "width: 18rem"
+    let cardDiv = document.createElement("div")
+    cardDiv.className = "card"
+    cardDiv.style = "width: 18rem"
     let img = document.createElement("img")
-    img.src = artwork.image
     img.className = "card-img-top"
-
-    let divBody = document.createElement("div")
-    divBody.className = "card-body"
+    img.src = artwork.image
+    let cardBody = document.createElement("div")
+    cardBody.className = "card-body"
     let h5 = document.createElement("h5")
-    h5.innerText = artwork.title
     h5.className = "card-title"
+    h5.innerText = artwork.title
     let h6 = document.createElement("h6")
     h6.innerText = artwork.artist_name
 
-    divBody.appendChild(h5)
-    divBody.appendChild(h6)
-    div.appendChild(img)
-    div.appendChild(divBody)
-    column.appendChild(div)
+    let p = document.createElement("p")
+    let pValue = thousands_separators(artwork.price)
+    p.innerText = pValue
 
-    let artContainer = document.querySelector(".row")
-    artContainer.appendChild(column)
+    cardBody.appendChild(h5)
+    cardBody.appendChild(h6)
+    cardBody.appendChild(p)
+    cardDiv.appendChild(img)
+    cardDiv.appendChild(cardBody)
+    column.appendChild(cardDiv)
+    row.appendChild(column)
+}
+
+const createUser = () => {
+
 }
 
 const getGalleries = () => {
     fetch('http://localhost:3000/galleries')
     .then(res => res.json())
     .then(json => allGalleries(json))
-}
+  
+  }
 
 const allGalleries = (galleriesArray) => {
     let galleryDropdown = document.getElementById('inputGroupSelect01')
