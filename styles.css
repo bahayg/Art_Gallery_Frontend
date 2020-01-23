@@ -81,3 +81,20 @@
     display: flex;
     flex-wrap: wrap;
   } */
+
+
+  .card {
+    margin-top: 20px;
+  }
+
+  .card img {
+    max-height: 260px;
+    width: -webkit-fill-available;
+  } 
+
+  .jumbotron h1 {
+    font-weight: 800;
+  }
+
+  } */
+
