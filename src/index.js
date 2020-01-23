@@ -23,7 +23,7 @@ const thousands_separators = num => {
 } 
 
 const makeArtCard = artwork => {
-    let row = document.querySelector(".row")
+    let row = document.getElementById("pic-details")
     let column = document.createElement("div")
     column.className = "col-sm"
     let cardDiv = document.createElement("div")
@@ -67,10 +67,82 @@ const getGalleries = () => {
 const allGalleries = (galleriesArray) => {
     let galleryDropdown = document.getElementById('inputGroupSelect01')
     galleriesArray.forEach( gallery => {
+        
         let galleryOption = document.createElement('option')
+        galleryOption.id = gallery.id
         galleryOption.innerText = gallery.name
-        galleryDropdown.appendChild(galleryOption)
+        console.log(gallery)
+        
+        galleryDropdown.onchange = () => {
+            let artworkDisplay = document.querySelector(".row")
+            artworkDisplay.style.display = 'none'
+            
+            makeGalleryCard()
+        }
+
+            galleryDropdown.appendChild(galleryOption)
+        })                                        
+        
+}
+
+const makeGalleryCard = () => {
+
+    gallery.artworks.forEach(artwork => {
+    let row = document.getElementById("pic-details")
+    let picDisplay = document.getElementById("gallery-display")
+    let column = document.createElement("div")
+    column.className = "col-sm"
+    let cardDiv = document.createElement("div")
+    cardDiv.className = "card"
+    cardDiv.style = "width: 18rem"
+    let img = document.createElement("img")
+    img.className = "card-img-top"
+    img.src = artwork.image
+    let cardBody = document.createElement("div")
+    cardBody.className = "card-body"
+    let h5 = document.createElement("h5")
+    h5.className = "card-title"
+    h5.innerText = gallery.artwork.title
+    let h6 = document.createElement("h6")
+    h6.innerText = artwork.artist_name
+
+    let p = document.createElement("p")
+    let pValue = thousands_separators(artwork.price)
+    p.innerText = pValue
+
+    cardBody.append(h5, h6, p)
+    cardDiv.append(img, carBody)
+    column.append(cardDiv)
+    picDisplay.append(column)
+    row.appendpicDisplay)
     })
+
+    // let row = document.getElementById("pic-details")
+    // let column = document.createElement("div")
+    // column.className = "col-sm"
+    // let cardDiv = document.createElement("div")
+    // cardDiv.className = "card"
+    // cardDiv.style = "width: 18rem"
+    // let img = document.createElement("img")
+    // img.className = "card-img-top"
+    // img.src = artwork.image
+    // let cardBody = document.createElement("div")
+    // cardBody.className = "card-body"
+    // let h5 = document.createElement("h5")
+    // h5.className = "card-title"
+    // h5.innerText = gallery.artwork.title
+    // let h6 = document.createElement("h6")
+    // h6.innerText = artwork.artist_name
+
+    // let p = document.createElement("p")
+    // let pValue = thousands_separators(artwork.price)
+    // p.innerText = pValue
+
+    // cardBody.append(h5, h6, p)
+    // cardDiv.append(img, carBody)
+    // column.appendChild(cardDiv)
+    // row.appendChild(column)
+
 }
 
 
