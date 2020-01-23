@@ -1,4 +1,4 @@
-const ARTWORKS_URL = "https://api.artsy.net/api/tokens/xapp_token?client_id=6823a01cacfc8eb52c8b&client_secret=476506b96c59c125414d8ae951344725"
+const ARTWORKS_URL = "https://api.artsy.net/api/artworks"
 
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
