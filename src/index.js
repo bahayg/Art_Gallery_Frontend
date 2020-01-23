@@ -11,25 +11,17 @@ const getArtwork = () => {
     .then(json => showArtwork(json))
 }
 
-const showArtwork = (artworksArray) => {
+const showArtwork = artworksArray => {
     artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
 
 const thousands_separators = num => {
-    var num_parts = num.toString().split(".");
+    let num_parts = num.toString().split(".");
     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return `$${num_parts.join(".")}`;
 } 
 
-//   function number_to_price(v){
-//     if(v==0){return '0,00';}
-//     v=parseFloat(v);
-//     v=v.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-//     v=v.split('.').join('*').split(',').join('.').split('*').join(',');
-//     return v;
-// }
-
-const makeArtCard = (artwork) => {
+const makeArtCard = artwork => {
     let row = document.querySelector(".row")
     let column = document.createElement("div")
     column.className = "col-sm"
@@ -59,7 +51,9 @@ const makeArtCard = (artwork) => {
     row.appendChild(column)
 }
 
-
+const createUser = () => {
+    
+}
 
 
 
