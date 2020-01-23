@@ -1,4 +1,6 @@
-const ARTWORKS_URL = "https://api.artsy.net/api/artworks"
+
+// const ARTWORKS_URL = "https://api.artsy.net/api/tokens/xapp_token?client_id=6823a01cacfc8eb52c8b&client_secret=476506b96c59c125414d8ae951344725"
+const ArtWork_Url = "http://localhost:3000/artworks"
 
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
@@ -6,14 +8,49 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 const getArtwork = () => {
-    fetch(ARTWORKS_URL)
+    fetch(ArtWork_Url)
     .then(res => res.json())
-    .then(json => console.log(json))
+    .then(json => showArtwork(json))
 }
 
 const showArtwork = (artworksArray) => {
-    artworksArray.forEach(artwork  => addArtwork(artwork))
+    artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
+
+const makeArtCard = (artwork) => {
+    let column = document.createElement("div")
+    column.className = "col-sm"
+    const div = document.createElement("div")
+    div.className = "card"
+    div.style = "width: 18rem"
+    let img = document.createElement("img")
+    img.src = artwork.image
+    img.className = "card-img-top"
+
+    let divBody = document.createElement("div")
+    divBody.className = "card-body"
+    let h5 = document.createElement("h5")
+    h5.innerText = artwork.title
+    h5.className = "card-title"
+    let h6 = document.createElement("h6")
+    h6.innerText = artwork.artist_name
+
+    divBody.appendChild(h5)
+    divBody.appendChild(h6)
+    div.appendChild(img)
+    div.appendChild(divBody)
+    column.appendChild(div)
+
+
+    let artContainer = document.querySelector(".row")
+    artContainer.appendChild(column)
+
+
+}
+
+
+
+
 
 
 
@@ -113,4 +150,3 @@ const showArtwork = (artworksArray) => {
 //         addPokemon(data)
 //     })
 // }
-

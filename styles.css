@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
     padding: 0;
   }
@@ -66,5 +66,19 @@ body {
     main {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }
+  } */
+
+  /* #artwork-collection {
+    display: flex;
+    flex-wrap: wrap;
+  } */
+
+
+  .card {
+    margin-top: 20px;
   }
-  
+
+  .card img {
+    max-height: 260px;
+    width: -webkit-fill-available;
+  } 
