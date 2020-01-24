@@ -13,7 +13,7 @@ const getArtwork = () => {
 }
 
 const showArtwork = artworksArray => {
-    // console.log(artworksArray)
+    // console.log(artworksArray\\
     artworksArray.forEach(artwork => makeArtCard(artwork))
 }
 
