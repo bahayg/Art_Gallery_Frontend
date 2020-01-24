@@ -1,9 +1,14 @@
 // const ARTWORKS_URL = "https://api.artsy.net/api/tokens/xapp_token?client_id=6823a01cacfc8eb52c8b&client_secret=476506b96c59c125414d8ae951344725"
 const ArtWork_Url = "http://localhost:3000/artworks"
+const Gallery_Url = "http://localhost:3000/galleries"
+
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
     getArtwork()
     getGalleries()
+    createUser()
+    loginUser()
+    addNewArt()
 })
 
 const getArtwork = () => {
@@ -13,8 +18,7 @@ const getArtwork = () => {
 }
 
 const showArtwork = artworksArray => {
-    // console.log(artworksArray\\
-    artworksArray.forEach(artwork => makeArtCard(artwork))
+    artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
 
 const thousands_separators = num => {
@@ -86,11 +90,138 @@ const makeArtCard = artwork => {
     cardDiv.appendChild(cardBody)
     column.appendChild(cardDiv)
     imageSectionRow.appendChild(column)
-
 }
 
-const getGalleries = () => {
+const createUser = () => {
+    galleryName = null;
+    let signupForm = document.getElementById("signup-form")
+    signupForm.onsubmit = e => {
+        e.preventDefault()
+        galleryName = e.target[0].value
+        getGalleriesSignup(galleryName)
+    }
+}
+
+const getGalleriesSignup = (galleryName) => {
     fetch('http://localhost:3000/galleries')
+    .then(res => res.json())
+    .then(json => allGalleriesSignup(json))
+    .then(data => checkGalleriesSignup(data, galleryName))
+  }
+
+  const allGalleriesSignup = (galleriesArray) => {
+    galleryNames = []
+    galleriesArray.forEach(gallery => {
+        galleryNames.push(gallery.name)
+    })
+        return galleryNames
+  }
+
+const checkGalleriesSignup = (data, galleryName) => {
+    if (data.find(name => name === galleryName)) {
+        alert("You are already a user, please log in!")
+        let signupInput = document.getElementById("signup-input")
+        signupInput.value = ""
+    } else {
+        postUser(galleryName)   
+    }
+}
+
+
+const postUser = galleryName => {
+    return fetch(Gallery_Url, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: galleryName
+        })
+    })
+    .then(res => res.json())
+    .then(json => {
+        localStorage.setItem("gallery_id", json["id"]);
+        currentUser(galleryName)   
+        // tannersFunction(localStorage.getItem("gallery_id"))
+    }) 
+}
+
+const currentUser = galleryName => {
+    let signupInput = document.getElementById("signup-input")
+    signupInput.value = ""
+    let loginInput = document.getElementById("login-input")
+    loginInput.value = ""
+    let userContainer = document.getElementById("user-container")
+    userContainer.style.display = "none"
+
+    let currentUserForm= document.getElementById("current-user")
+    let p = document.createElement("p")
+    p.innerText = `Hi ${galleryName}`
+    currentUserForm.appendChild(p)
+    currentUserForm.style.display = "block"
+
+    let deleteUserBtn = document.getElementById("delete-user-btn")
+    deleteUserBtn.onclick = () => {
+        // deleteUser(galleryName)
+    }
+
+    let logoutBtn = document.getElementById("logout-btn")
+    logoutBtn.onclick = () => {
+        logoutUser()
+    }
+
+} 
+
+const loginUser = () => {
+    let galleryName = null;
+    let loginForm = document.getElementById("login-form")
+    loginForm.onsubmit = e => {
+        e.preventDefault()
+        galleryName = e.target[0].value
+        getGalleriesLogin(galleryName)
+    }
+}
+
+const getGalleriesLogin = galleryName => {
+    fetch(`http://localhost:3000/galleries/${galleryName}`)
+    .then(resp => resp.json())
+    .then(json => {
+        localStorage.clear()
+        localStorage.setItem("gallery_id", json["id"]);
+        currentUser(json.name)  
+        // tannersFunction(localStorage.getItem("gallery_id")) 
+    })
+}
+
+
+// const deleteUser = (galleryName) => {
+//     fetch(`http://localhost:3000/galleries/${galleryName}`,{
+//         method: "DELETE",    
+//     })
+//     .then (function() {
+//         let currentUserForm= document.getElementById("current-user")
+//         currentUserForm.style.display = "none"
+//         let userContainer = document.getElementById("user-container")
+//         userContainer.style.display = "block"
+//         // div.remove();
+//         localStorage.clear()
+//       alert("User deleted")
+
+//     })
+// }
+
+const logoutUser = () => {
+    localStorage.clear()
+    let currentUserForm= document.getElementById("current-user")
+    currentUserForm.style.display = "none"
+    let userForm = document.getElementById("user-form")
+    userForm.style.display = "block"
+}
+        
+
+const getGalleries = () => {
+   fetch('http://localhost:3000/galleries')
     .then(res => res.json())
     .then(json => allGalleries(json))
 }
@@ -123,12 +254,36 @@ const getGallery = (e, galleriesArray) => {
 const showGalleryArt = (e, gallery) => {
     if (e.target.value === gallery.name) {
         let artworkDisplay = document.querySelectorAll(".col-sm")
-        artworkDisplay.forEach(artCard => {
-            gallery.artworks.forEach(artWork => {
+         artworkDisplay.forEach(artCard => {
+             gallery.artworks.forEach(artWork => {
                 if (parseInt(artCard.id) === artWork.id) {
                     artCard.style.display = 'block'
                 }
-            })
-        })
+             })
+         })
     }
+}
+const addNewArt = () => {
+    let modal = document.getElementById('add-new-art-modal')
+    modal.addEventListener("submit", (e) => {
+        console.log(e)
+        postArt(e)
+    })
+}
+
+const postArt = (e) => {
+    fetch('http://localhost:3000/artworks', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            "title": e.target[0].value,
+             "artist_name": e.target[1].value,
+             "image": e.target[2].value,
+             "price": e.target[3].value
+        })
+    }).then(res => res.json())
+    .then(json => makeArtCard(json))
 }
