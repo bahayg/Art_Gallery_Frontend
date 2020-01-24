@@ -20,6 +20,9 @@
   font-weight: 800;
 }
 
+#image-section-row {
+  display: flex;
+}
 .modal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */

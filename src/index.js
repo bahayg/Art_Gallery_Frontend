@@ -25,9 +25,9 @@ const thousands_separators = num => {
 
 const makeArtCard = artwork => {
     let imageSectionRow= document.getElementById("image-section-row")
-    // let row = document.querySelector(".row")
     let column = document.createElement("div")
     column.className = "col-sm"
+    column.setAttribute("id", `${artwork.id}`)
     column.setAttribute("id", "card-outer-div")
 
     let cardDiv = document.createElement("div")
@@ -93,14 +93,42 @@ const getGalleries = () => {
     fetch('http://localhost:3000/galleries')
     .then(res => res.json())
     .then(json => allGalleries(json))
-  
-  }
+}
 
 const allGalleries = (galleriesArray) => {
     let galleryDropdown = document.getElementById('inputGroupSelect01')
     galleriesArray.forEach( gallery => {
+        
         let galleryOption = document.createElement('option')
+        galleryOption.id = gallery.id
         galleryOption.innerText = gallery.name
+        
+        galleryDropdown.onchange = (e) => {
+            let artworkDisplay = document.querySelectorAll(".col-sm")
+            artworkDisplay.forEach(artCard => {
+                artCard.style.display = 'none'
+            })
+             getGallery(e, galleriesArray)
+        }
         galleryDropdown.appendChild(galleryOption)
+    })                                        
+}
+
+const getGallery = (e, galleriesArray) => {
+    galleriesArray.forEach(gallery => {
+        showGalleryArt(e, gallery)
     })
 }
+
+const showGalleryArt = (e, gallery) => {
+    if (e.target.value === gallery.name) {
+        let artworkDisplay = document.querySelectorAll(".col-sm")
+        artworkDisplay.forEach(artCard => {
+            gallery.artworks.forEach(artWork => {
+                if (parseInt(artCard.id) === artWork.id) {
+                    artCard.style.display = 'block'
+                }
+            })
+        })
+    }
+    }
