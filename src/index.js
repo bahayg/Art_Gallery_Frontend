@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
     getArtwork()
     getGalleries()
-    clickArtwork()
 })
 
 const getArtwork = () => {
@@ -14,6 +13,7 @@ const getArtwork = () => {
 }
 
 const showArtwork = artworksArray => {
+    console.log(artworksArray)
     artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
 
@@ -28,8 +28,40 @@ const makeArtCard = artwork => {
     // let row = document.querySelector(".row")
     let column = document.createElement("div")
     column.className = "col-sm"
+    column.setAttribute("id", "card-outer-div")
+
     let cardDiv = document.createElement("div")
     cardDiv.className = "card"
+    cardDiv.setAttribute("id", "art-card-holder")
+    let modal = document.getElementById("art-detail-modal");
+    cardDiv.onclick = () =>{
+        modal.style.display = "block";
+
+        let artworkTitle = document.getElementById('artworktitle')
+        artworkTitle.innerText = artwork.title
+
+        let artistworkname = document.getElementById('artistworkname')
+        artistworkname.innerText = artwork.artist_name
+        artistworkname.classList.add("font-italic")
+
+        let price = document.getElementById('price')
+        priceValue = thousands_separators(artwork.price)
+        price.innerText = priceValue
+
+        let modalImage = document.getElementById('modal-image-art')
+        modalImage.src=artwork.image
+        
+        let span = document.getElementsByClassName("close")[0];
+        span.onclick = function() {
+            modal.style.display = "none";
+          }
+          window.onclick = function(event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          }
+      }
+
     cardDiv.style = "width: 18rem"
     let img = document.createElement("img")
     img.className = "card-img-top"
@@ -49,68 +81,11 @@ const makeArtCard = artwork => {
     cardBody.appendChild(h5)
     cardBody.appendChild(h6)
     cardBody.appendChild(p)
+    // cardBody.appendChild(detailsButton)
     cardDiv.appendChild(img)
     cardDiv.appendChild(cardBody)
     column.appendChild(cardDiv)
     imageSectionRow.appendChild(column)
-
-    cardDiv.addEventListener('click', () => {
-        createArtworkModal(artwork)
-        
-    })
-}
-
-const createArtworkModal = (artwork) => {
-    console.log(artwork.title)
-    // artwork modal details: image, title, artistname, price, add button
-
-    let modal = document.createElement('div')
-    modal.classList.add('modal')
-    modal.tabindex=1
-
-    let modalDialog = document.createElement('div')
-    modalDialog.classList.add('modal-dialog')
-
-    let modalHeader = document.createElement('div')
-    modalHeader.classList.add('modal-header')
-
-    let modalTitle = document.createElement('h5')
-    h5.innerText = artwork.title
-
-    let modalButton = document.createElement('button')
-    modalButton.type = "button"
-    modalButton.classList.add('close')
-    modalButton.setAttribute(data-dismiss, "modal")
-    let modalButtonSpan = document.createElement('span')
-    modalButtonSpan.setAttribute(aria-hidden, true)
-    modalButtonSpan.innerText = "&times;"
-
-
-
-    let modalBody = document.createElement('div')
-    modalBody.classList.add('modal-body')
-
-    let modalP = document.createElement('p')
-    modalP.innerText = artwork.artist_name
-
-    modalBody.appendChild(modalP)
-
-
-    let modalFooter = document.createElement('div')
-    modalFooter.classList.add('modal-footer')
-
-    let modalFooterButton = document.createElement('button')
-    modalFooterButton.type = "button"
-    modalFooterButton.classList.add('btn')
-    modalFooterButton.classList.add('btn-primary')
-    modalFooterButton.setAttribute(data-dismi)
-
-}
-
-
-
-
-const createUser = () => {
 
 }
 
@@ -129,103 +104,3 @@ const allGalleries = (galleriesArray) => {
         galleryDropdown.appendChild(galleryOption)
     })
 }
-
-clickArtwork()
-
-
-//------------------
-// const addTrainer = (trainer) => {
-//     const main = document.querySelector("main")
-//     const div = makeTrainerCard(trainer)
-//     main.appendChild(div)
-// }
-
-// const makeTrainerCard = (trainer) => {
-//     let trainerDiv = document.createElement("div")
-//     trainerDiv.className = "card"
-//     trainerDiv.setAttribute("data-id", trainer.id)
-
-//    let trainerP = document.createElement("p")
-//    trainerP.textContent = `${trainer.name}`
-
-//    let addButton = document.createElement("button")
-//    addButton.setAttribute("data-trainer-id", trainer.id)
-//    addButton.innerText = "Add Pokemon"
-
-//    addButton.addEventListener("click", function(){
-//         generatePokemon(trainer.id)
-//         // pokeUl.innerHTML = ""
-//         // getPokemon(trainer.id)
-//    })
-
-//     let pokeUl = document.createElement("ul")
-//     pokeUl.id = trainer.id
-
-
-//    trainerDiv.appendChild(trainerP)
-//    trainerDiv.appendChild(addButton)
-//    trainerDiv.appendChild(pokeUl)
-
-// //    getPokemon(trainer.id)
-//    showPokemons(trainer)
-   
-//    return trainerDiv
-// }
-
-// // const getPokemon = (trainerId) => {
-// //     fetch(`http://localhost:3000/trainers/${trainerId}`)
-// //     .then(res => res.json())
-// //     .then(data => showPokemons(data.pokemons))
-// // }
-
-// const showPokemons = (trainer) => {
-//     trainer.pokemons.map(pokemon => {
-//         addPokemon(pokemon, trainer.id)
-//     })
-// }
-
-// const addPokemon = (pokemon, trainerId) => {
-//     let ul = document.getElementById(trainerId)
-//     const li = makeLi(pokemon)
-//     ul.appendChild(li)
-// }
-
-// const makeLi = (pokemon) => {
-//     let li = document.createElement("li")
-//     li.innerText = `${pokemon.nickname} (${pokemon.species})`
-
-//     let releaseButton = document.createElement("button")
-//     releaseButton.className = "release"
-//     releaseButton.innerText = "Release"
-//     releaseButton.setAttribute("data-pokemon-id", pokemon.id)
-
-//     li.appendChild(releaseButton)
-//     releaseButton.addEventListener("click", function(){
-//         deletePokemon(pokemon.id)
-//         li.remove()
-//     })
-//     return li
-// }
-
-// const deletePokemon = (pokemonId) => {
-//    fetch(POKEMONS_URL + `/${pokemonId}`, {
-//         method: "DELETE"
-//     })
-// }
-
-// const generatePokemon = (trainerId) => {
-//    fetch(POKEMONS_URL, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             trainer_id: trainerId
-//         })
-//     })
-//     .then(res => res.json())
-//     .then(data => {
-//         // data.trainer_id = data.trainer.id
-//         addPokemon(data)
-//     })
-// }
