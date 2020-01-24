@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", function() {
     createUser()
     loginUser()
     addNewArt()
+  
+
+    
+       
+    
 })
 
 const getArtwork = () => {
@@ -64,6 +69,14 @@ const makeArtCard = artwork => {
               modal.style.display = "none";
             }
           }
+
+          let addButton = document.getElementById('modal-add-button')
+    
+          addButton.addEventListener('click', function(){
+            let galleryId = localStorage.getItem("gallery_id")
+            fetchGalleryForUpdate(galleryId, artwork)
+            console.log(artwork)
+          })
       }
 
     cardDiv.style = "width: 18rem"
@@ -250,19 +263,19 @@ const getGallery = (e, galleriesArray) => {
         showGalleryArt(e, gallery)
     })
 }
-
-const showGalleryArt = (e, gallery) => {
-    if (e.target.value === gallery.name) {
-        let artworkDisplay = document.querySelectorAll(".col-sm")
-         artworkDisplay.forEach(artCard => {
-             gallery.artworks.forEach(artWork => {
-                if (parseInt(artCard.id) === artWork.id) {
-                    artCard.style.display = 'block'
-                }
+    const showGalleryArt = (e, gallery) => {
+        if (e.target.value === gallery.name) {
+            let artworkDisplay = document.querySelectorAll(".col-sm")
+             artworkDisplay.forEach(artCard => {
+                 gallery.artworks.forEach(artWork => {
+                    if (parseInt(artCard.id) === artWork.id) {
+                        artCard.style.display = 'block'
+                    }
+                 })
              })
-         })
+        }
     }
-}
+
 const addNewArt = () => {
     let modal = document.getElementById('add-new-art-modal')
     modal.addEventListener("submit", (e) => {
@@ -286,4 +299,23 @@ const postArt = (e) => {
         })
     }).then(res => res.json())
     .then(json => makeArtCard(json))
+}
+
+
+const fetchGalleryForUpdate = (gallery, artwork) => {
+    //letPaintingsArray = artwork.gallery
+    console.log(gallery)
+    console.log(artwork.id)
+    fetch(`http://localhost:3000/artwork_galleries`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            "artwork_id": artwork.id,
+            "gallery_id": gallery
+        })
+    }).then(res => res.json())
+    .then(json => console.log(json))
 }
