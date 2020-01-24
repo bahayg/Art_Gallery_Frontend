@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
     getArtwork()
     getGalleries()
+    addNewArt()
 })
 
 const getArtwork = () => {
@@ -103,4 +104,29 @@ const allGalleries = (galleriesArray) => {
         galleryOption.innerText = gallery.name
         galleryDropdown.appendChild(galleryOption)
     })
+}
+
+const addNewArt = () => {
+    let modal = document.getElementById('add-new-art-modal')
+    modal.addEventListener("submit", (e) => {
+        console.log(e)
+        postArt(e)
+    })
+}
+
+const postArt = (e) => {
+    fetch('http://localhost:3000/artworks', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            "title": e.target[0].value,
+             "artist_name": e.target[1].value,
+             "image": e.target[2].value,
+             "price": e.target[3].value
+        })
+    }).then(res => res.json())
+    .then(json => makeArtCard(json))
 }
