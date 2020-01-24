@@ -7,7 +7,6 @@
   width: -webkit-fill-available;
 } 
 
-<<<<<<< HEAD
 .card {
   margin-top: 20px;
 }
@@ -20,7 +19,6 @@
 .jumbotron h1 {
   font-weight: 800;
 }
-=======
 #current-user {
   display: none;
 }
@@ -93,7 +91,6 @@
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }
   } */
->>>>>>> userFeature
 
 #image-section-row {
   display: flex;
