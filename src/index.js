@@ -1,7 +1,5 @@
-
 // const ARTWORKS_URL = "https://api.artsy.net/api/tokens/xapp_token?client_id=6823a01cacfc8eb52c8b&client_secret=476506b96c59c125414d8ae951344725"
 const ArtWork_Url = "http://localhost:3000/artworks"
-
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM LOADED")
     getArtwork()
@@ -15,8 +13,8 @@ const getArtwork = () => {
 }
 
 const showArtwork = artworksArray => {
-    console.log(artworksArray)
-    artworksArray.forEach(artwork  => makeArtCard(artwork))
+    // console.log(artworksArray)
+    artworksArray.forEach(artwork => makeArtCard(artwork))
 }
 
 const thousands_separators = num => {
@@ -30,6 +28,8 @@ const makeArtCard = artwork => {
     let column = document.createElement("div")
     column.className = "col-sm"
     column.setAttribute("id", `${artwork.id}`)
+    // column.setAttribute("id", "card-outer-div")
+
     let cardDiv = document.createElement("div")
     cardDiv.className = "card"
     cardDiv.setAttribute("id", "art-card-holder")
