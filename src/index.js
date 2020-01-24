@@ -23,9 +23,10 @@ const thousands_separators = num => {
 } 
 
 const makeArtCard = artwork => {
-    let row = document.getElementById("pic-details")
+    let imageSectionRow= document.getElementById("image-section-row")
     let column = document.createElement("div")
     column.className = "col-sm"
+    column.setAttribute("id", `${artwork.id}`)
     let cardDiv = document.createElement("div")
     cardDiv.className = "card"
     cardDiv.style = "width: 18rem"
@@ -50,19 +51,14 @@ const makeArtCard = artwork => {
     cardDiv.appendChild(img)
     cardDiv.appendChild(cardBody)
     column.appendChild(cardDiv)
-    row.appendChild(column)
-}
-
-const createUser = () => {
-
+    imageSectionRow.appendChild(column)
 }
 
 const getGalleries = () => {
     fetch('http://localhost:3000/galleries')
     .then(res => res.json())
     .then(json => allGalleries(json))
-  
-  }
+}
 
 const allGalleries = (galleriesArray) => {
     let galleryDropdown = document.getElementById('inputGroupSelect01')
@@ -71,176 +67,33 @@ const allGalleries = (galleriesArray) => {
         let galleryOption = document.createElement('option')
         galleryOption.id = gallery.id
         galleryOption.innerText = gallery.name
-        console.log(gallery)
         
-        galleryDropdown.onchange = () => {
-            let artworkDisplay = document.querySelector(".row")
-            artworkDisplay.style.display = 'none'
-            
-            makeGalleryCard()
+        galleryDropdown.onchange = (e) => {
+            let artworkDisplay = document.querySelectorAll(".col-sm")
+            artworkDisplay.forEach(artCard => {
+                artCard.style.display = 'none'
+            })
+             getGallery(e, galleriesArray)
         }
-
-            galleryDropdown.appendChild(galleryOption)
-        })                                        
-        
+        galleryDropdown.appendChild(galleryOption)
+    })                                        
 }
 
-const makeGalleryCard = () => {
-
-    gallery.artworks.forEach(artwork => {
-    let row = document.getElementById("pic-details")
-    let picDisplay = document.getElementById("gallery-display")
-    let column = document.createElement("div")
-    column.className = "col-sm"
-    let cardDiv = document.createElement("div")
-    cardDiv.className = "card"
-    cardDiv.style = "width: 18rem"
-    let img = document.createElement("img")
-    img.className = "card-img-top"
-    img.src = artwork.image
-    let cardBody = document.createElement("div")
-    cardBody.className = "card-body"
-    let h5 = document.createElement("h5")
-    h5.className = "card-title"
-    h5.innerText = gallery.artwork.title
-    let h6 = document.createElement("h6")
-    h6.innerText = artwork.artist_name
-
-    let p = document.createElement("p")
-    let pValue = thousands_separators(artwork.price)
-    p.innerText = pValue
-
-    cardBody.append(h5, h6, p)
-    cardDiv.append(img, carBody)
-    column.append(cardDiv)
-    picDisplay.append(column)
-    row.appendpicDisplay)
+const getGallery = (e, galleriesArray) => {
+    galleriesArray.forEach(gallery => {
+        showGalleryArt(e, gallery)
     })
-
-    // let row = document.getElementById("pic-details")
-    // let column = document.createElement("div")
-    // column.className = "col-sm"
-    // let cardDiv = document.createElement("div")
-    // cardDiv.className = "card"
-    // cardDiv.style = "width: 18rem"
-    // let img = document.createElement("img")
-    // img.className = "card-img-top"
-    // img.src = artwork.image
-    // let cardBody = document.createElement("div")
-    // cardBody.className = "card-body"
-    // let h5 = document.createElement("h5")
-    // h5.className = "card-title"
-    // h5.innerText = gallery.artwork.title
-    // let h6 = document.createElement("h6")
-    // h6.innerText = artwork.artist_name
-
-    // let p = document.createElement("p")
-    // let pValue = thousands_separators(artwork.price)
-    // p.innerText = pValue
-
-    // cardBody.append(h5, h6, p)
-    // cardDiv.append(img, carBody)
-    // column.appendChild(cardDiv)
-    // row.appendChild(column)
-
 }
 
-
-
-
-//------------------
-// const addTrainer = (trainer) => {
-//     const main = document.querySelector("main")
-//     const div = makeTrainerCard(trainer)
-//     main.appendChild(div)
-// }
-
-// const makeTrainerCard = (trainer) => {
-//     let trainerDiv = document.createElement("div")
-//     trainerDiv.className = "card"
-//     trainerDiv.setAttribute("data-id", trainer.id)
-
-//    let trainerP = document.createElement("p")
-//    trainerP.textContent = `${trainer.name}`
-
-//    let addButton = document.createElement("button")
-//    addButton.setAttribute("data-trainer-id", trainer.id)
-//    addButton.innerText = "Add Pokemon"
-
-//    addButton.addEventListener("click", function(){
-//         generatePokemon(trainer.id)
-//         // pokeUl.innerHTML = ""
-//         // getPokemon(trainer.id)
-//    })
-
-//     let pokeUl = document.createElement("ul")
-//     pokeUl.id = trainer.id
-
-
-//    trainerDiv.appendChild(trainerP)
-//    trainerDiv.appendChild(addButton)
-//    trainerDiv.appendChild(pokeUl)
-
-// //    getPokemon(trainer.id)
-//    showPokemons(trainer)
-   
-//    return trainerDiv
-// }
-
-// // const getPokemon = (trainerId) => {
-// //     fetch(`http://localhost:3000/trainers/${trainerId}`)
-// //     .then(res => res.json())
-// //     .then(data => showPokemons(data.pokemons))
-// // }
-
-// const showPokemons = (trainer) => {
-//     trainer.pokemons.map(pokemon => {
-//         addPokemon(pokemon, trainer.id)
-//     })
-// }
-
-// const addPokemon = (pokemon, trainerId) => {
-//     let ul = document.getElementById(trainerId)
-//     const li = makeLi(pokemon)
-//     ul.appendChild(li)
-// }
-
-// const makeLi = (pokemon) => {
-//     let li = document.createElement("li")
-//     li.innerText = `${pokemon.nickname} (${pokemon.species})`
-
-//     let releaseButton = document.createElement("button")
-//     releaseButton.className = "release"
-//     releaseButton.innerText = "Release"
-//     releaseButton.setAttribute("data-pokemon-id", pokemon.id)
-
-//     li.appendChild(releaseButton)
-//     releaseButton.addEventListener("click", function(){
-//         deletePokemon(pokemon.id)
-//         li.remove()
-//     })
-//     return li
-// }
-
-// const deletePokemon = (pokemonId) => {
-//    fetch(POKEMONS_URL + `/${pokemonId}`, {
-//         method: "DELETE"
-//     })
-// }
-
-// const generatePokemon = (trainerId) => {
-//    fetch(POKEMONS_URL, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             trainer_id: trainerId
-//         })
-//     })
-//     .then(res => res.json())
-//     .then(data => {
-//         // data.trainer_id = data.trainer.id
-//         addPokemon(data)
-//     })
-// }
+const showGalleryArt = (e, gallery) => {
+    if (e.target.value === gallery.name) {
+        let artworkDisplay = document.querySelectorAll(".col-sm")
+        artworkDisplay.forEach(artCard => {
+            gallery.artworks.forEach(artWork => {
+                if (parseInt(artCard.id) === artWork.id) {
+                    artCard.style.display = 'block'
+                }
+            })
+        })
+    }
+}
