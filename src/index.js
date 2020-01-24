@@ -131,4 +131,4 @@ const showGalleryArt = (e, gallery) => {
             })
         })
     }
-    }
+}
