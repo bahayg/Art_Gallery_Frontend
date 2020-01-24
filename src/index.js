@@ -17,7 +17,6 @@ const getArtwork = () => {
 }
 
 const showArtwork = artworksArray => {
-    console.log(artworksArray)
     artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
 
@@ -89,7 +88,7 @@ const makeArtCard = artwork => {
     cardDiv.appendChild(img)
     cardDiv.appendChild(cardBody)
     column.appendChild(cardDiv)
-    row.appendChild(column)
+    imageSectionRow.appendChild(column)
 }
 
 const createUser = () => {
