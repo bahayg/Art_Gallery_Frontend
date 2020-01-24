@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
     <header>
+      <div class="container">
+        <div class="row">
+          <!-- <div class="col-4">
       <h2>Art Gallery App</h2>
+    </div> -->
+    <div class="col-12">
       <div id="user-container">
-
         <form id="signup-form">
           <input id="signup-input" type="text" placeholder="Enter Username" name="username">
           <button id="signup-btn" type="submit">Sign up</button> 
@@ -27,12 +31,19 @@
           <button id="delete-user-btn" type="submit">Delete Account</button> 
           <p></p>  
         </form>  
-  
 
-      
+<!-- styles to be added to login/signup input fields and buttons -->
+          <!-- <input class="input" id="signup-login" type="text" placeholder="Enter Username" name="username">
+          <button class="btn btn-primary" id="login-user-btn" type="submit">Log in</button>
+          <button class="btn btn-primary" id="create-user-btn" type="submit">Sign up</button>   
+        </div>   
+      </div>
+    </div>
+    </div> -->
+
     </header>
 
-      <!-- The Modal -->
+      <!-- The Artworks Detail Modal -->
   <div id="art-detail-modal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
@@ -55,12 +66,48 @@
   </div>
 
 
+<!-- Add a New Artwork Modal -->
+       <div id="add-new-art-modal" class="modal1">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <form id="new-art-form">
+                  <h3>Add a new Artwork to Inventory</h3>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput"></label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Artwork Title">
+                  </div>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2"></label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Artist Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2"></label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Image Url">
+                  </div>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2"></label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Price">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
 
     <div class="jumbotron">
       <h1 class="display-4">Artworks Inventory</h1>
-      <p class="lead">View all artworks in our inventory added by any different galleries.</p>
+      <p class="lead">Please click on artwork to get more information.</p>
       <hr class="my-4">
-      <p>Please click on artwork to get more information.</p>
+      <a class="btn btn-primary btn-lg" id="new-artwork-button" role="button">Add an Artwork to the Inventory</a>
     </div>
 
 
