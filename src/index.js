@@ -13,6 +13,7 @@ const getArtwork = () => {
 }
 
 const showArtwork = artworksArray => {
+    console.log(artworksArray)
     artworksArray.forEach(artwork  => makeArtCard(artwork))
 }
 
@@ -27,8 +28,40 @@ const makeArtCard = artwork => {
     let column = document.createElement("div")
     column.className = "col-sm"
     column.setAttribute("id", `${artwork.id}`)
+    column.setAttribute("id", "card-outer-div")
+
     let cardDiv = document.createElement("div")
     cardDiv.className = "card"
+    cardDiv.setAttribute("id", "art-card-holder")
+    let modal = document.getElementById("art-detail-modal");
+    cardDiv.onclick = () =>{
+        modal.style.display = "block";
+
+        let artworkTitle = document.getElementById('artworktitle')
+        artworkTitle.innerText = artwork.title
+
+        let artistworkname = document.getElementById('artistworkname')
+        artistworkname.innerText = artwork.artist_name
+        artistworkname.classList.add("font-italic")
+
+        let price = document.getElementById('price')
+        priceValue = thousands_separators(artwork.price)
+        price.innerText = priceValue
+
+        let modalImage = document.getElementById('modal-image-art')
+        modalImage.src=artwork.image
+        
+        let span = document.getElementsByClassName("close")[0];
+        span.onclick = function() {
+            modal.style.display = "none";
+          }
+          window.onclick = function(event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          }
+      }
+
     cardDiv.style = "width: 18rem"
     let img = document.createElement("img")
     img.className = "card-img-top"
@@ -48,10 +81,12 @@ const makeArtCard = artwork => {
     cardBody.appendChild(h5)
     cardBody.appendChild(h6)
     cardBody.appendChild(p)
+    // cardBody.appendChild(detailsButton)
     cardDiv.appendChild(img)
     cardDiv.appendChild(cardBody)
     column.appendChild(cardDiv)
     imageSectionRow.appendChild(column)
+
 }
 
 const getGalleries = () => {
@@ -96,4 +131,4 @@ const showGalleryArt = (e, gallery) => {
             })
         })
     }
-}
+    }
