@@ -92,6 +92,11 @@
     }
   } */
 
+/* #image-section-row { */
+
+#current-user {
+  display: none;
+}
 /* #image-section-row {
   display: flex;
 } */
@@ -156,3 +161,18 @@
   background-color: #4487a7!important;
   border-color: #4487a7!important;
 }
+
+#user-container {
+  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#new-artwork-button {
+  color: #fff;
+}
+
+/* #add-new-art-modal {
+  display: none;
+} */
+
