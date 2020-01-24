@@ -11,10 +11,27 @@
     <header>
       <h2>Art Gallery App</h2>
       <div id="user-container">
-          <input id="signup-login" type="text" placeholder="Enter Username" name="username">
-          <button id="login-user-btn" type="submit">Log in</button>
-          <button id="create-user-btn" type="submit">Sign up</button>      
+
+        <form id="signup-form">
+          <input id="signup-input" type="text" placeholder="Enter Username" name="username">
+          <button id="signup-btn" type="submit">Sign up</button> 
+        </form>
+        
+          <form id="login-form">
+          <input id="login-input" type="text" placeholder="Enter Username" name="username">
+          <button id="login-btn" type="submit">Log in</button>
+        </form> 
+
       </div>
+
+        <form id="current-user">
+          <button id="logout-btn" type="submit">Log out</button>
+          <button id="delete-user-btn" type="submit">Delete Account</button> 
+          <p></p>  
+        </form>  
+  
+
+      
     </header>
 
     <div class="jumbotron">
